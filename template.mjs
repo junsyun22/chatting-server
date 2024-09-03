@@ -121,7 +121,26 @@ async function createRepository() {
 
     console.log("Changes pushed to repository");
 
-    // 레이블 추가
+    // 기존 레이블 삭제
+    const { data: existingLabels } = await octokit.issues.listLabelsForRepo({
+      owner: OWNER,
+      repo: REPO,
+    });
+
+    for (const label of existingLabels) {
+      try {
+        await octokit.issues.deleteLabel({
+          owner: OWNER,
+          repo: REPO,
+          name: label.name
+        });
+        console.log(`Deleted existing label: ${label.name}`);
+      } catch (deleteError) {
+        console.error(`Error deleting label '${label.name}': ${deleteError.message}`);
+      }
+    }
+
+    // 사용자 정의 레이블 추가
     for (const label of LABELS) {
       try {
         await octokit.issues.createLabel({
