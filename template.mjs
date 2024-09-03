@@ -9,7 +9,7 @@ const octokit = new Octokit({ auth: GITHUB_TOKEN });
 
 // GitHub 사용자 이름과 새 레포지토리 이름
 const OWNER = "junsyun22"; // 변경 필요
-const REPO = "chatting-server";  // 변경 필요
+const REPO = "Repo_Template";  // 변경 필요
 
 // Git 커밋 메시지 컨벤션 설정
 const COMMIT_MESSAGE_CONVENTIONS = {
