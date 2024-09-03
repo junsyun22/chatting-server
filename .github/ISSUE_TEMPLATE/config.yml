@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Bug Report
+  - name: 🚨Bug Report
     url: https://github.com/junsyun22/chatting-server/issues/new?template=bug_report.md
-    about: Report a bug in the project.
-  - name: Feature Request
+    about: 🐛Report a bug in the project.
+  - name: ✅Feature Request
     url: https://github.com/junsyun22/chatting-server/issues/new?template=feature_request.md
     about: Suggest a new feature for the project.

@@ -1,12 +1,4 @@
 
----
-name: "✅기능 이슈"
-about: 개발할 상세 기능을 적어 주세요.
-title: "[Feat] 추가할 기능"
-labels: Feat, Fix
-assignees: ''
-
----
 
 ## 📋 Description
 기능 이름: 구현할 기능의 이름을 작성하세요. (예: "아이템 CRUD")

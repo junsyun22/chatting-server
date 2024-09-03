@@ -48,14 +48,6 @@ const LABELS = Object.keys(COMMIT_MESSAGE_CONVENTIONS).map(key => ({
 
 // 기능 이슈 템플릿 내용
 const FEATURE_ISSUE_TEMPLATE = `
----
-name: "✅기능 이슈"
-about: 개발할 상세 기능을 적어 주세요.
-title: "[Feat] 추가할 기능"
-labels: Feat, Fix
-assignees: ''
-
----
 
 ## 📋 Description
 기능 이름: 구현할 기능의 이름을 작성하세요. (예: "아이템 CRUD")
@@ -73,14 +65,6 @@ assignees: ''
 
 // 버그 리포트 템플릿 내용
 const BUG_REPORT_TEMPLATE = `
----
-name: "🚨버그 리포트"
-about: 어떤 버그인가요?
-title: 어떤 버그인가요?
-labels: Fix
-assignees: ''
-
----
 
 ## 🐛 어떤 버그인가요?
 - 버그 이름: 버그에 대한 간단한 제목을 작성하세요. (예: "아이템 생성 시 중복 이름 허용")
