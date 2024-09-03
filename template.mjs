@@ -25,13 +25,26 @@ const COMMIT_MESSAGE_CONVENTIONS = {
   "Rename": "파일, 폴더명 수정"
 };
 
+// 레이블 색상 설정 (랜덤한 고유 색상 선택)
+const LABEL_COLORS = {
+  "Feat": "1D76DB",
+  "Fix": "E11D21",
+  "Docs": "0E8A16",
+  "Style": "FBCA04",
+  "Refactor": "8E44AD",
+  "Test": "BADA55",
+  "Chore": "FFC0CB",
+  "Comment": "F39C12",
+  "Remove": "34495E",
+  "Rename": "2ECC71"
+};
+
 // 기본 레이블 설정
-const LABELS = [
-  { name: "Feat", color: "1D76DB", description: "새로운 기능 추가" },
-  { name: "Fix", color: "E11D21", description: "버그 수정" },
-  { name: "Docs", color: "0E8A16", description: "문서 수정" },
-  { name: "Chore", color: "FBCA04", description: "빌드 업무 수정" }
-];
+const LABELS = Object.keys(COMMIT_MESSAGE_CONVENTIONS).map(key => ({
+  name: key,
+  color: LABEL_COLORS[key],
+  description: COMMIT_MESSAGE_CONVENTIONS[key]
+}));
 
 // 기능 이슈 템플릿 내용
 const FEATURE_ISSUE_TEMPLATE = `
