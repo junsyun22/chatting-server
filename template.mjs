@@ -3,9 +3,8 @@ import simpleGit from "simple-git";
 import fs from "fs";
 import path from "path";
 
-
 // 환경 변수에서 토큰을 가져옵니다.
-const GITHUB_TOKEN = process.env.GITHUB_TOKEN; 
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const octokit = new Octokit({ auth: GITHUB_TOKEN });
 
 // GitHub 사용자 이름과 새 레포지토리 이름
@@ -25,6 +24,14 @@ const COMMIT_MESSAGE_CONVENTIONS = {
   "Remove": "파일, 폴더 삭제",
   "Rename": "파일, 폴더명 수정"
 };
+
+// 기본 레이블 설정
+const LABELS = [
+  { name: "Feat", color: "1D76DB", description: "새로운 기능 추가" },
+  { name: "Fix", color: "E11D21", description: "버그 수정" },
+  { name: "Docs", color: "0E8A16", description: "문서 수정" },
+  { name: "Chore", color: "FBCA04", description: "빌드 업무 수정" }
+];
 
 // 기능 이슈 템플릿 내용
 const FEATURE_ISSUE_TEMPLATE = `
@@ -101,12 +108,37 @@ async function createRepository() {
     const commitType = "Feat"; // 기본값을 Feat로 설정. 필요 시 사용자 입력으로 변경 가능
     const commitMessage = `${commitType}: ${COMMIT_MESSAGE_CONVENTIONS[commitType]}`;
     
-    // 커밋 및 푸시
+    // 변경 사항 추가
     await git.add("./*");
     await git.commit(commitMessage);
-    await git.addRemote("origin", `https://github.com/${OWNER}/${REPO}.git`);
+
+    // 원격 추가 전에 기존 원격이 있는지 확인
+    const remotes = await git.getRemotes();
+    if (!remotes.find(remote => remote.name === "origin")) {
+      // 원격 리포지토리 추가 (origin이 없을 때만)
+      await git.addRemote("origin", `https://github.com/${OWNER}/${REPO}.git`);
+    }
+
+    // 원격 리포지토리에 푸시
     await git.push("origin", "main");
+
     console.log("Changes pushed to repository");
+
+    // 레이블 추가
+    for (const label of LABELS) {
+      try {
+        await octokit.issues.createLabel({
+          owner: OWNER,
+          repo: REPO,
+          name: label.name,
+          color: label.color,
+          description: label.description
+        });
+        console.log(`Label '${label.name}' created successfully.`);
+      } catch (labelError) {
+        console.error(`Error creating label '${label.name}': ${labelError.message}`);
+      }
+    }
 
   } catch (error) {
     console.error(`Error creating repository: ${error.message}`);
